@@ -5,6 +5,7 @@
 
 create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
+create extension if not exists pg_trgm;
 
 -- ---------- ENUMS ----------
 do $$ begin
@@ -92,8 +93,6 @@ create index if not exists idx_products_brand on products(brand_id);
 create index if not exists idx_products_sold_monthly on products(sold_monthly desc);
 create index if not exists idx_products_rating on products(rating desc);
 create index if not exists idx_products_name_trgm on products using gin (name gin_trgm_ops);
-
-create extension if not exists pg_trgm;
 
 -- ---------- LIVE SESSIONS ----------
 create table if not exists live_sessions (
