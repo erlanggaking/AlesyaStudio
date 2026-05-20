@@ -1,10 +1,21 @@
 "use client";
-import { Bell, Search } from "lucide-react";
+import { Bell, LogOut, Search } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 export function Topbar({ title }: { title?: string }) {
+  const router = useRouter();
+
+  function handleLogout() {
+    document.cookie = "alesya_auth=; path=/; max-age=0; SameSite=Lax";
+    toast.success("Berhasil logout");
+    router.push("/login");
+    router.refresh();
+  }
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6">
       <div className="flex-1">
@@ -29,6 +40,9 @@ export function Topbar({ title }: { title?: string }) {
           <AvatarImage src="https://ui-avatars.com/api/?name=Yuna+Admin&background=EE4D2D&color=fff" alt="Yuna" />
           <AvatarFallback>YA</AvatarFallback>
         </Avatar>
+        <Button variant="ghost" size="icon" aria-label="Logout" onClick={handleLogout}>
+          <LogOut className="h-4 w-4" />
+        </Button>
       </div>
     </header>
   );
